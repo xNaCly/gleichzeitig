@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"os"
+	"os/signal"
 )
 
 var VERSION = "0.0.1"
@@ -19,6 +21,20 @@ func main() {
 		}
 	} else {
 		CONFIG = getConfig()
+		c := make(chan os.Signal)
+		signal.Notify(c, os.Interrupt)
+		go func() {
+			<-c
+			for i, c := range COMMANDS {
+				fmt.Println()
+				commandPrint(i, "terminating...")
+				err := c.Process.Kill()
+				if err != nil {
+					commandPrint(i, "failed to terminate...")
+				}
+			}
+			os.Exit(1)
+		}()
 		startCommands()
 	}
 }

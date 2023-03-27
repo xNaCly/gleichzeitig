@@ -2,8 +2,7 @@
   "color_output": true,
   "commands": [
     {
-      "cwd": ".gleichzeitig",
-      "cmd": "ls -la"
+      "cmd": "echo 'test'"
     },
     {
       "cmd": "python3 -m http.server"

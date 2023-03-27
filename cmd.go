@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -12,11 +11,10 @@ import (
 var COMMANDS = []*exec.Cmd{}
 
 // startCommand executes the given command in a goroutine and prints the output of it using commandPrint
-// TODO: this currently only works with commands that stop after they are done
 func startCommand(command Command, index int) {
-	commandPrint(index, fmt.Sprintf("executing: '%s'", command.Cmd))
 	args := strings.Split(command.Cmd, " ")
 	defer wg.Done()
+
 	cmd := exec.Command(args[0], args[1:]...)
 	COMMANDS = append(COMMANDS, cmd)
 
@@ -25,20 +23,22 @@ func startCommand(command Command, index int) {
 		cmd.Dir = command.Cwd
 	}
 
-	stdout, _ := cmd.StdoutPipe()
-	err := cmd.Start()
+	commandPrint(index, fmt.Sprintf("executing: '%s'", command.Cmd))
 
-	scanner := bufio.NewScanner(stdout)
-	for scanner.Scan() {
-		commandPrint(index, scanner.Text())
-	}
+	stdout, err := cmd.CombinedOutput()
 
 	if err != nil {
 		commandPrint(index, fmt.Sprintf("error: %s", err))
 		logErr("error while executing command, aborting")
 	}
 
+	for _, l := range strings.Split(string(stdout), "\n") {
+		commandPrint(index, l)
+	}
 	cmd.Wait()
+
+	commandPrint(index, "finished...")
+
 }
 
 func startCommands() {
@@ -48,18 +48,7 @@ func startCommands() {
 	}
 	for i, c := range CONFIG.Commands {
 		wg.Add(1)
-		startCommand(c, i)
-	}
-	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Print("Press 'q' to quit: \n")
-	for scanner.Scan() {
-		input := scanner.Text()
-		if input == "q" {
-			for i, c := range COMMANDS {
-				commandPrint(i, "killing command")
-				c.Process.Kill()
-			}
-		}
+		go startCommand(c, i)
 	}
 	wg.Wait()
 	os.Exit(0)
