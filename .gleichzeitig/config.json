@@ -1,0 +1,14 @@
+{
+  "color_output": true,
+  "commands": [
+    {
+      "cwd": ".gleichzeitig",
+      "cmd": "ls -la"
+    },
+    {
+      "cmd": "python3 -m http.server"
+    }
+  ],
+  "log_file": "",
+  "surpress_output": false
+}
