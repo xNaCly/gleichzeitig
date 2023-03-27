@@ -5,6 +5,7 @@ import (
 	"log"
 	"os/exec"
 	"strings"
+	"sync"
 )
 
 const (
@@ -26,7 +27,12 @@ var colors = []string{
 	ANSI_RED,
 }
 
+var wg sync.WaitGroup
+
 func commandPrint(index int, text string) {
+	if len(text) == 0 {
+		return
+	}
 	i := func() string {
 		if index < 9 {
 			return fmt.Sprintf("0%d", index)
@@ -37,14 +43,18 @@ func commandPrint(index int, text string) {
 }
 
 func startCommand(command string, index int) {
+	commandPrint(index, fmt.Sprintf("executing: '%s'", command))
 	args := strings.Split(command, " ")
-	out, err := exec.Command(args[0], args[1:]...).Output()
-	if err != nil {
-		log.Fatalln(err)
-	}
-	for _, line := range strings.Split(string(out), "\n") {
-		commandPrint(index, line)
-	}
+	go func() {
+		defer wg.Done()
+		out, err := exec.Command(args[0], args[1:]...).Output()
+		if err != nil {
+			log.Fatalln(err)
+		}
+		for _, line := range strings.Split(string(out), "\n") {
+			commandPrint(index, line)
+		}
+	}()
 }
 
 func main() {
@@ -52,9 +62,10 @@ func main() {
 	// TODO: execute programs in parallel
 	// TODO: wait for execution
 	// TODO: <Ctrl-C> should terminate all running scripts
-	commands := []string{"ls -la", "whoami", "uptime -p", "who", "groups", "echo $SHELL"}
+	commands := []string{"ls -la", "whoami", "uptime -p", "who", "groups", "echo 'test'"}
 	for i, c := range commands {
-		commandPrint(i, fmt.Sprintf("executing: '%s'", c))
+		wg.Add(1)
 		startCommand(c, i)
 	}
+	wg.Wait()
 }
