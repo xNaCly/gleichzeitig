@@ -29,7 +29,7 @@ var colors = []string{
 
 var wg sync.WaitGroup
 
-// prints not empty text with color to allow the user to separate the output of different commands
+// prints not empty text with color to allow the user to separate the output of different commands.
 // index is used to select a color, therefore a maximum of 6 commands can be executed in parallel
 func commandPrint(index int, text string) {
 	if len(text) == 0 {
@@ -63,7 +63,10 @@ func startCommand(command string, index int) {
 func main() {
 	// TODO: get instructions to run in parallel
 	// TODO: <Ctrl-C> should terminate all running scripts
-	commands := []string{"ls -la", "whoami", "uptime -p", "who", "groups", "echo 'test'"}
+	commands := []string{"ls -la", "whoami", "uptime -p", "who", "groups", "neofetch"}
+	if len(commands) > len(colors) {
+		log.Fatalln("too many commands, a maximum of 6 commands can be executed in parallel")
+	}
 	for i, c := range commands {
 		wg.Add(1)
 		startCommand(c, i)
