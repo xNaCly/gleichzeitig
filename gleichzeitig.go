@@ -29,6 +29,8 @@ var colors = []string{
 
 var wg sync.WaitGroup
 
+// prints not empty text with color to allow the user to separate the output of different commands
+// index is used to select a color, therefore a maximum of 6 commands can be executed in parallel
 func commandPrint(index int, text string) {
 	if len(text) == 0 {
 		return
@@ -42,6 +44,7 @@ func commandPrint(index int, text string) {
 	fmt.Printf("%s%s | %s%s\n", colors[index], i, text, ANSI_RESET)
 }
 
+// startCommand executes the given command in a goroutine and prints the output of it using commandPrint
 func startCommand(command string, index int) {
 	commandPrint(index, fmt.Sprintf("executing: '%s'", command))
 	args := strings.Split(command, " ")
@@ -59,8 +62,6 @@ func startCommand(command string, index int) {
 
 func main() {
 	// TODO: get instructions to run in parallel
-	// TODO: execute programs in parallel
-	// TODO: wait for execution
 	// TODO: <Ctrl-C> should terminate all running scripts
 	commands := []string{"ls -la", "whoami", "uptime -p", "who", "groups", "echo 'test'"}
 	for i, c := range commands {
