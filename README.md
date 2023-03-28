@@ -2,9 +2,9 @@
 
 Run shell scripts, commands and executables in parallel (ger: gleichzeitig).
 
-## Install
+https://user-images.githubusercontent.com/47723417/228235525-2cf3e098-027e-4f76-aee7-e0b434f8023f.mp4
 
-### From release
+## Install
 
 ### From source
 
