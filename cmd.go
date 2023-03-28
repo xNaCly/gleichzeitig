@@ -17,10 +17,8 @@ func run(subArgs []string) {
 	CONFIG.Commands = []Command{}
 	if len(subArgs) == 0 {
 		logErr("no command given, aborting")
-	} else if len(subArgs) > 1 {
-		logErr("too many arguments, only one string of '+' separated commands is allowed, aborting")
 	}
-	for _, c := range strings.Split(subArgs[0], "+") {
+	for _, c := range subArgs {
 		CONFIG.Commands = append(CONFIG.Commands, Command{Cmd: c})
 	}
 	startCommands()
@@ -131,13 +129,13 @@ Run 'gleichzeitig' without any command to execute the commands defined in the co
 
 Commands:
     init, i        create a default config file
-    run, r         run commands  
+    run, r         run arguments as commands  
     help, h        print this help message
     version, v     print the version
 
 Examples:
     gleichzeitig init
-    gleichzeitig run "echo 'hello world' + echo 'hello world 2'"
+    gleichzeitig run "echo 'hello world'" "echo 'hello world 2'"
     gleichzeitig help
     gleichzeitig version
 

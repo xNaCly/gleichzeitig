@@ -70,10 +70,10 @@ The configuration is located at `.gleichzeitig/config.json` in the current worki
 
 ## Usage
 
-| command    | description                                                      | example                                        |
-| ---------- | ---------------------------------------------------------------- | ---------------------------------------------- |
-|            | executes the commands in the config                              | `gleichzeitig`                                 |
-| run,r      | executes the commands separated by `+`                           | `gleichzeitig run "echo 'hello world'"+ls -la` |
-| init, i    | creates the config dir, file and writes the default config to it | `gleichzeitig init`                            |
-| version, v | prints the version, exits                                        | `gleichzeitig version`                         |
-| help, h    | prints the help, exits                                           | `gleichzeitig help`                            |
+| command    | description                                                      | example                                          |
+| ---------- | ---------------------------------------------------------------- | ------------------------------------------------ |
+|            | executes the commands in the config                              | `gleichzeitig`                                   |
+| run,r      | executes the arguments as commands                               | `gleichzeitig run "echo 'hello world'" "ls -la"` |
+| init, i    | creates the config dir, file and writes the default config to it | `gleichzeitig init`                              |
+| version, v | prints the version, exits                                        | `gleichzeitig version`                           |
+| help, h    | prints the help, exits                                           | `gleichzeitig help`                              |
