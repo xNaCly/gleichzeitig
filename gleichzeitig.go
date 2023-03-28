@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 )
@@ -13,8 +14,11 @@ var COMMITDATE = ""
 var CONFIG Config = Config{}
 
 func main() {
+	log.SetFlags(log.Ltime)
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
+		case "run", "r":
+			run(os.Args[2:])
 		case "init", "i":
 			initGleichzeitig()
 		case "help", "h":

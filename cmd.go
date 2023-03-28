@@ -12,8 +12,23 @@ import (
 
 var COMMANDS = []*exec.Cmd{}
 
+func run(subArgs []string) {
+	CONFIG = DEFAULT_CONFIG
+	CONFIG.Commands = []Command{}
+	if len(subArgs) == 0 {
+		logErr("no command given, aborting")
+	} else if len(subArgs) > 1 {
+		logErr("too many arguments, only one string of '+' separated commands is allowed, aborting")
+	}
+	for _, c := range strings.Split(subArgs[0], "+") {
+		CONFIG.Commands = append(CONFIG.Commands, Command{Cmd: c})
+	}
+	startCommands()
+}
+
 // startCommand executes the given command in a goroutine and prints the output of it using commandPrint
 func startCommand(command Command, index int) {
+	startTime := time.Now()
 	args := strings.Split(command.Cmd, " ")
 	defer wg.Done()
 
@@ -112,13 +127,19 @@ by: xnacly
 Usage:
     gleichzeitig [command]
 
+Run 'gleichzeitig' without any command to execute the commands defined in the config file.
 
 Commands:
     init, i        create a default config file
+    run, r         run commands  
     help, h        print this help message
     version, v     print the version
 
-Run 'gleichzeitig' without any command to execute the commands defined in the config file.
+Examples:
+    gleichzeitig init
+    gleichzeitig run "echo 'hello world' + echo 'hello world 2'"
+    gleichzeitig help
+    gleichzeitig version
 
 website: https://github.com/xnacly/gleichzeitig`)
 }
