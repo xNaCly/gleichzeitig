@@ -4,6 +4,8 @@ Run shell scripts, commands and executables in parallel (ger: gleichzeitig).
 
 ## Install
 
+### From release
+
 ### From source
 
 > requires git and go
