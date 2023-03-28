@@ -72,21 +72,21 @@ func startCommands() {
 func initGleichzeitig() {
 	err := os.Mkdir(".gleichzeitig", os.ModePerm)
 	if err != nil {
-		logWarn("couldn't create '.gleichzeitig' directory")
+		logWarn("couldn't create '.gleichzeitig' directory: '" + err.Error() + "'")
 	} else {
 		logInfo("created '.gleichzeitig' dir")
 	}
 
 	file, err := os.Create(".gleichzeitig/config.json")
 	if err != nil {
-		logErr("couldn't create '.gleichzeitig/config.json' file")
+		logErr("couldn't create '.gleichzeitig/config.json' file: '" + err.Error() + "'")
 	}
 	logInfo("created '.gleichzeitig/config.json' file")
 
 	out, _ := json.MarshalIndent(DEFAULT_CONFIG, "", "\t")
 	_, err = file.Write(out)
 	if err != nil {
-		logErr("couldn't write default config to '.gleichzeitig/config.json' file")
+		logErr("couldn't write default config to '.gleichzeitig/config.json' file: '" + err.Error() + "'")
 	}
 	logInfo("wrote default config to '.gleichzeitig/config.json' file")
 }

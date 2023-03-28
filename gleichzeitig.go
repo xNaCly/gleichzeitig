@@ -32,9 +32,9 @@ func main() {
 			for i, c := range COMMANDS {
 				err := c.Process.Kill()
 				if err != nil {
-					commandPrint(i, "failed to terminate...")
+					commandPrint(i, "command already stopped.")
 				} else {
-					commandPrint(i, "terminated...")
+					commandPrint(i, "terminated.")
 				}
 			}
 			os.Exit(1)
