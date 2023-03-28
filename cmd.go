@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"time"
 )
 
 var COMMANDS = []*exec.Cmd{}
@@ -48,16 +49,17 @@ func startCommand(command Command, index int) {
 
 	if err != nil {
 		commandPrint(index, fmt.Sprintf("error: %s", err))
-		logErr("error while executing command, aborting")
+		logErr("error while executing command '" + command.Cmd + "', aborting")
 	}
 
 	cmd.Wait()
 
-	commandPrint(index, "finished...")
+	commandPrint(index, "done, took "+time.Since(startTime).String())
 }
 
 func startCommands() {
 	logInfo(fmt.Sprintf("found '%d' commands", len(CONFIG.Commands)))
+	startTime := time.Now()
 	if len(CONFIG.Commands) == 0 {
 		logErr("no commands found, aborting")
 	}
@@ -66,10 +68,22 @@ func startCommands() {
 		go startCommand(c, i)
 	}
 	wg.Wait()
+	logInfo("all commands finished, took " + time.Since(startTime).String())
 	os.Exit(0)
 }
 
 func initGleichzeitig() {
+	if _, err := os.Stat(CONFIG_PATH); err == nil {
+		logWarn("config file already exists, do you want to overwrite it?")
+		fmt.Print("y/n: ")
+		var input string
+		fmt.Scanln(&input)
+		if input == "n" {
+			logInfo("aborting")
+			os.Exit(1)
+		}
+		logInfo("got 'y', overwriting config file")
+	}
 	err := os.Mkdir(".gleichzeitig", os.ModePerm)
 	if err != nil {
 		logWarn("couldn't create '.gleichzeitig' directory: '" + err.Error() + "'")
