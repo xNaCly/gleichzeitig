@@ -1,11 +1,15 @@
 {
-  "color_output": true,
-  "commands": [
-    {
-      "cmd": "echo 'Hello World!'"
-    }
-  ],
-  "log_file": "",
-  "surpress_output": false
+	"color_output": true,
+	"commands": [
+		{
+			"cwd": "",
+			"cmd": "echo 'Hello World from command 1!'"
+		},
+		{
+			"cwd": "",
+			"cmd": "echo 'Hello World from command 2!'"
+		}
+	],
+	"log_file": "",
+	"surpress_output": false
 }
-
