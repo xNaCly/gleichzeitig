@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"os"
 )
 
@@ -24,7 +23,10 @@ var DEFAULT_CONFIG = Config{
 	ColorOutput: true,
 	Commands: []Command{
 		{
-			Cmd: "echo 'Hello World!'",
+			Cmd: "echo 'Hello World from command 1!'",
+		},
+		{
+			Cmd: "echo 'Hello World from command 2!'",
 		},
 	},
 	LogFile:        "",
@@ -35,11 +37,11 @@ func getConfig() Config {
 	conf := Config{}
 	content, err := os.ReadFile(CONFIG_PATH)
 	if err != nil {
-		log.Fatalln("config not found, create one using 'gleichzeitig init'")
+		logErr("config not found, create one using 'gleichzeitig init'")
 	}
 	err = json.Unmarshal(content, &conf)
 	if err != nil {
-		log.Fatalln("config couldn't be parsed, generate a new one using 'gleichzeitig init'")
+		logErr("config is not valid json")
 	}
 	return conf
 }
