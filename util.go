@@ -7,21 +7,24 @@ import (
 )
 
 const (
-	ANSI_RESET   = "\033[0m"
-	ANSI_RED     = "\033[91m"
-	ANSI_GREEN   = "\033[92m"
-	ANSI_YELLOW  = "\033[93m"
-	ANSI_BLUE    = "\033[94m"
-	ANSI_MAGENTA = "\033[95m"
-	ANSI_CYAN    = "\033[96m"
+	ANSI_RESET         = "\x1b[0m"
+	ANSI_RED           = "\x1b[31m"
+	ANSI_GREEN         = "\x1b[32m"
+	ANSI_YELLOW        = "\x1b[33m"
+	ANSI_BLUE          = "\x1b[34m"
+	ANSI_MAGENTA       = "\x1b[35m"
+	ANSI_CYAN          = "\x1b[36m"
+	ANSI_RED_BRIGHT    = "\x1b[91m"
+	ANSI_YELLOW_BRIGHT = "\x1b[93m"
+	ANSI_CYAN_BRIGHT   = "\x1b[96m"
 )
 
 var colors = []string{
-	ANSI_CYAN,
-	ANSI_MAGENTA,
-	ANSI_YELLOW,
-	ANSI_GREEN,
 	ANSI_BLUE,
+	ANSI_MAGENTA,
+	ANSI_GREEN,
+	ANSI_CYAN,
+	ANSI_YELLOW,
 	ANSI_RED,
 }
 
@@ -41,21 +44,21 @@ func commandPrint(index int, text string) {
 	}()
 	if !CONFIG.SurpressOutput {
 		if CONFIG.ColorOutput {
-			fmt.Printf("%s%s | %s%s\n", colors[index%len(colors)], i, text, ANSI_RESET)
+			log.Printf("%s%s | %s%s\n", colors[index%len(colors)], i, text, ANSI_RESET)
 		} else {
-			fmt.Printf("%s | %s\n", i, text)
+			log.Printf("%s | %s\n", i, text)
 		}
 	}
 }
 
 func logInfo(text string) {
-	log.Printf("info: %s\n", text)
+	log.Printf("%sinfo%s: %s\n", ANSI_CYAN_BRIGHT, ANSI_RESET, text)
 }
 
 func logWarn(text string) {
-	log.Printf("warn: %s\n", text)
+	log.Printf("%swarn%s: %s\n", ANSI_YELLOW_BRIGHT, ANSI_RESET, text)
 }
 
 func logErr(text string) {
-	log.Fatalf("err: %s\n", text)
+	log.Fatalf("%serr%s: %s\n", ANSI_RED_BRIGHT, ANSI_RESET, text)
 }
