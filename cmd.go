@@ -110,5 +110,5 @@ website: https://github.com/xnacly/gleichzeitig`)
 }
 
 func printVersion() {
-	fmt.Printf("gleichzeitig v%s\n", VERSION)
+	fmt.Printf("gleichzeitig [version=%s] [commit=%s] [commitDate=%s]\n", VERSION, COMMITSHA, COMMITDATE)
 }

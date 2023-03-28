@@ -6,7 +6,10 @@ import (
 	"os/signal"
 )
 
-var VERSION = "0.0.1"
+var VERSION = ""
+var COMMITSHA = ""
+var COMMITDATE = ""
+
 var CONFIG Config = Config{}
 
 func main() {
