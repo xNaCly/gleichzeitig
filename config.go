@@ -24,12 +24,7 @@ var DEFAULT_CONFIG = Config{
 	ColorOutput: true,
 	Commands: []Command{
 		{
-			Cwd: ".gleichzeitig",
-			Cmd: "ls -la",
-		},
-		{
-			Cwd: ".",
-			Cmd: "ls -la",
+			Cmd: "echo 'Hello World!'",
 		},
 	},
 	LogFile:        "",

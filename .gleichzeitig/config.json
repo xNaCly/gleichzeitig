@@ -2,12 +2,10 @@
   "color_output": true,
   "commands": [
     {
-      "cmd": "echo 'test'"
-    },
-    {
-      "cmd": "python3 -m http.server"
+      "cmd": "echo 'Hello World!'"
     }
   ],
   "log_file": "",
   "surpress_output": false
 }
+
