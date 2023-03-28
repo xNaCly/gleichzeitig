@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -25,20 +26,34 @@ func startCommand(command Command, index int) {
 
 	commandPrint(index, fmt.Sprintf("executing: '%s'", command.Cmd))
 
-	stdout, err := cmd.CombinedOutput()
+	stdout, _ := cmd.StdoutPipe()
+	stderr, _ := cmd.StderrPipe()
+
+	go func() {
+		scanner := bufio.NewScanner(stdout)
+		scanner.Split(bufio.ScanLines)
+		for scanner.Scan() {
+			commandPrint(index, scanner.Text())
+		}
+	}()
+	go func() {
+		scanner := bufio.NewScanner(stderr)
+		scanner.Split(bufio.ScanLines)
+		for scanner.Scan() {
+			commandPrint(index, scanner.Text())
+		}
+	}()
+
+	err := cmd.Start()
 
 	if err != nil {
 		commandPrint(index, fmt.Sprintf("error: %s", err))
 		logErr("error while executing command, aborting")
 	}
 
-	for _, l := range strings.Split(string(stdout), "\n") {
-		commandPrint(index, l)
-	}
 	cmd.Wait()
 
 	commandPrint(index, "finished...")
-
 }
 
 func startCommands() {

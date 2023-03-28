@@ -25,12 +25,13 @@ func main() {
 		signal.Notify(c, os.Interrupt)
 		go func() {
 			<-c
+			fmt.Println()
 			for i, c := range COMMANDS {
-				fmt.Println()
-				commandPrint(i, "terminating...")
 				err := c.Process.Kill()
 				if err != nil {
 					commandPrint(i, "failed to terminate...")
+				} else {
+					commandPrint(i, "terminated...")
 				}
 			}
 			os.Exit(1)
