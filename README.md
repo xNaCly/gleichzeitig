@@ -2,7 +2,7 @@
 
 Run shell scripts, commands and executables in parallel (ger: gleichzeitig).
 
-https://user-images.githubusercontent.com/47723417/228235525-2cf3e098-027e-4f76-aee7-e0b434f8023f.mp4
+https://user-images.githubusercontent.com/47723417/228802151-056a549a-5bbf-43af-8de3-b1f84b2a5792.mp4
 
 ## Install
 
@@ -65,7 +65,7 @@ The configuration is located at `.gleichzeitig/config.json` in the current worki
   ```
   - `cwd`: specify the working directory for the command to execute in, supports relative paths
   - `cmd`: the command to execute, if not found error is thrown
-- `log_file`: the file to write all logs to **CURRENTLY NOT IMPLEMENTED**
+- `log_file`: the file to write all logs to
 - `surpress_output`: whether the commands stdout and stderr should be printed
 
 ## Usage
