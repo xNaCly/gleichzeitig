@@ -6,6 +6,18 @@ https://user-images.githubusercontent.com/47723417/228802151-056a549a-5bbf-43af-
 
 ## Install
 
+### From release
+
+1. Download the [latest release](https://github.com/xNaCly/gleichzeitig/releases/latest) for your architecture.
+2. Extract the archive
+3. Move the binary to an executable path:
+   - Linux:
+     ```console
+     $ sudo mv ./gleichzeitig /usr/bin/gleichzeitig
+     ```
+   - Windows:
+     > copy `gleichzeitig` to `C:\Program Files`
+
 ### From source
 
 > requires git and go
