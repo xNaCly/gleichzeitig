@@ -28,7 +28,10 @@ func run(subArgs []string) {
 func startCommand(command Command, index int) {
 	startTime := time.Now()
 	args := strings.Split(command.Cmd, " ")
-	defer wg.Done()
+	defer func() {
+		wg.Done()
+		commandPrint(index, "done, took "+time.Since(startTime).String())
+	}()
 
 	cmd := exec.Command(args[0], args[1:]...)
 	COMMANDS = append(COMMANDS, cmd)
@@ -49,7 +52,9 @@ func startCommand(command Command, index int) {
 		for scanner.Scan() {
 			commandPrint(index, scanner.Text())
 		}
+
 	}()
+
 	go func() {
 		scanner := bufio.NewScanner(stderr)
 		scanner.Split(bufio.ScanLines)
@@ -67,7 +72,6 @@ func startCommand(command Command, index int) {
 
 	cmd.Wait()
 
-	commandPrint(index, "done, took "+time.Since(startTime).String())
 }
 
 func startCommands() {
