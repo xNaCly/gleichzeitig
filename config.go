@@ -8,7 +8,7 @@ import (
 type Config struct {
 	ColorOutput    bool      `json:"color_output"`
 	Commands       []Command `json:"commands"`
-	LogFile        string    `json:"log_file"` /* TODO */
+	LogFile        string    `json:"log_file"`
 	SurpressOutput bool      `json:"surpress_output"`
 }
 
