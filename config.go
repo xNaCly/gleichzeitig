@@ -29,7 +29,7 @@ var DEFAULT_CONFIG = Config{
 			Cmd: "echo 'Hello World from command 2!'",
 		},
 	},
-	LogFile:        "",
+	LogFile:        "gleich.log",
 	SurpressOutput: false,
 }
 
