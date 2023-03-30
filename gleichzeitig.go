@@ -33,7 +33,7 @@ func main() {
 		logInfo("starting gleichzeitig with config located at '" + pwd + "/" + CONFIG_PATH + "'")
 		if CONFIG.LogFile != "" {
 			logInfo("found config value for 'config.log_file'")
-			logInfo("Logging to file: '" + CONFIG.LogFile + "'")
+			logInfo("logging to file: '" + CONFIG.LogFile + "'")
 			f, err := os.OpenFile(CONFIG.LogFile, os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
 			if err != nil {
 				logErr("failed to open logging file: '" + err.Error() + "'")
