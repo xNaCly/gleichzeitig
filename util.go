@@ -45,6 +45,10 @@ func commandPrint(index int, text string) {
 	}
 
 	if CONFIG.ColorOutput {
+		if CONFIG.OnlyColorPrefix {
+			log.Printf("%s%s |%s %s\n", colors[index%len(colors)], i, ANSI_RESET, text)
+			return
+		}
 		log.Printf("%s%s | %s%s\n", colors[index%len(colors)], i, text, ANSI_RESET)
 	} else {
 		log.Printf("%s | %s\n", i, text)

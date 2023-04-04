@@ -6,10 +6,11 @@ import (
 )
 
 type Config struct {
-	ColorOutput    bool      `json:"color_output"`
-	Commands       []Command `json:"commands"`
-	LogFile        string    `json:"log_file"`
-	SurpressOutput bool      `json:"surpress_output"`
+	OnlyColorPrefix bool      `json:"only_color_prefix"`
+	ColorOutput     bool      `json:"color_output"`
+	Commands        []Command `json:"commands"`
+	LogFile         string    `json:"log_file"`
+	SurpressOutput  bool      `json:"surpress_output"`
 }
 
 type Command struct {
@@ -20,7 +21,8 @@ type Command struct {
 const CONFIG_PATH = ".gleichzeitig/config.json"
 
 var DEFAULT_CONFIG = Config{
-	ColorOutput: true,
+	OnlyColorPrefix: true,
+	ColorOutput:     true,
 	Commands: []Command{
 		{
 			Cmd: "echo 'Hello World from command 1!'",

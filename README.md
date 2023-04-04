@@ -60,6 +60,7 @@ The configuration is located at `.gleichzeitig/config.json` in the current worki
 
 ```json
 {
+  "only_color_prefix": true,
   "color_output": true,
   "commands": [],
   "log_file": "",
@@ -67,6 +68,7 @@ The configuration is located at `.gleichzeitig/config.json` in the current worki
 }
 ```
 
+- `only_color_prefix`: wheter to color the full stdout and stderr prints or only the prefixes: `0x |`
 - `color_output`: whether the output of the individual commands should be coloured different to allow the user to differentiate between them
 - `commands`: array of instructions _gleichzeitig_ executes, of the following format:
   ```json
