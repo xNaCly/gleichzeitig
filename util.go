@@ -39,12 +39,15 @@ func commandPrint(index int, text string) {
 		}
 		return fmt.Sprint(index)
 	}()
-	if !CONFIG.SurpressOutput {
-		if CONFIG.ColorOutput {
-			log.Printf("%s%s | %s%s\n", colors[index%len(colors)], i, text, ANSI_RESET)
-		} else {
-			log.Printf("%s | %s\n", i, text)
-		}
+
+	if CONFIG.SurpressOutput {
+		return
+	}
+
+	if CONFIG.ColorOutput {
+		log.Printf("%s%s | %s%s\n", colors[index%len(colors)], i, text, ANSI_RESET)
+	} else {
+		log.Printf("%s | %s\n", i, text)
 	}
 }
 
